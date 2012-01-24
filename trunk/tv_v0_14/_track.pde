@@ -19,13 +19,6 @@ class _track {
     this.last_emit_t=SPACE.time;
   }
   
-  void add(_unit u){
-    if(SPACE.add(u).level==0){
-      this.units = ( _unit[] ) append(this.units,u);
-    }
-    u.position.motion_set_cubic_bezier(points,u.speed);
-  }
-  
   void wave(){
     _unit u;
     if(this.emit_count<10 && SPACE.time-this.last_emit_t > 1500){
@@ -37,7 +30,7 @@ class _track {
                         3,
                         0.1,
                         100*this.level*this.level
-                      ));
+                      ), true);
       u.add(new _gun(0.4, 0, 200, 2, 1, 500));
     }
     else if(this.emit_count==10){
@@ -47,12 +40,32 @@ class _track {
     }
   }
   
+  void add(_unit u){
+    this.add(u,false);
+  }
+  void add(_unit u, boolean neww){
+    if(!neww || ( neww && SPACE.add(u).level==0 )){
+      this.units = ( _unit[] ) append(this.units,u);
+    }
+    u.position.motion_set_cubic_bezier(points,u.speed);
+  }
+  
   void end(int index,_unit u){
     if(this.ending){
-      u.delete(200);
+      u.delete(500);
       u.position.motion_add(0,0,0,-2,-2,0);
       println(u.id+": ended");
     }
+    else{
+      this.next.add(u);
+    }
+    this.remove(index);
+  }
+  void remove(int index){
+    _unit[] unew = new _unit[this.units.length-1];
+    for(int i=0; i<this.units.length-1; i++)
+      unew[i] = this.units[i<index?i:i+1];
+    this.units=unew;
   }
   
   void draw(){
@@ -61,7 +74,7 @@ class _track {
     
     
     for(int i=0;i<this.units.length;i++){
-      if(this.units[i].life>0 && this.units[i].position.distance_from(this.points[this.points.length-1]) < 10*this.units[i].position.speed)
+      if(this.units[i].life>0 && this.units[i].position.distance_from(this.points[this.points.length-1]) < 1+25*this.units[i].position.speed)
         this.end(i, this.units[i]);
     }
     

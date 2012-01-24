@@ -12,8 +12,8 @@
  **/
 
 
-int MAXTOWERS=100;
-int MAXENEMYS=500;
+int MAXTOWERS=500;
+int MAXENEMYS=1000;
 int MAXFIRES=100;
 int DEBRISLIFE=3000;
 int FIREFXLIFE=750;
@@ -42,20 +42,28 @@ void setup() {
   delay(1000);
   
   
-  //////////////Test track
+  //////////////Test tracks
   _point_static[] t_points=new _point_static[0];
-  t_points=(_point_static[]) append(t_points, new _point_static(100,height/2,0));
-  t_points=(_point_static[]) append(t_points, new _point_static(  width/3,height,0));
-  t_points=(_point_static[]) append(t_points, new _point_static(2*width/3,0,0));
-  t_points=(_point_static[]) append(t_points, new _point_static(width-100,height/2,0));
+  _track tr;
+  t_points=(_point_static[]) append(t_points, new _point_static(531,472,0));
+  t_points=(_point_static[]) append(t_points, new _point_static(991,935,0));
+  t_points=(_point_static[]) append(t_points, new _point_static(1261,27,0));
+  t_points=(_point_static[]) append(t_points, new _point_static(749,239,0));
+  SPACE.add(tr=new _track( t_points, false, true, null, 30 ));
   
-  SPACE.add(new _track(
-                t_points,
-                true,
-                true,
-                null,
-                10
-            ));
+  t_points=new _point_static[0];
+  t_points=(_point_static[]) append(t_points, new _point_static(-39,152,0));
+  t_points=(_point_static[]) append(t_points, new _point_static(477,-33,0));
+  t_points=(_point_static[]) append(t_points, new _point_static(270,212,0));
+  t_points=(_point_static[]) append(t_points, new _point_static(531,472,0));
+  SPACE.add(new _track( t_points, true, false, tr, 30 ));
+  
+  t_points=new _point_static[0];
+  t_points=(_point_static[]) append(t_points, new _point_static(547,749,0));
+  t_points=(_point_static[]) append(t_points, new _point_static(113,511,0));
+  t_points=(_point_static[]) append(t_points, new _point_static(131, 73,0));
+  t_points=(_point_static[]) append(t_points, new _point_static(531,472,0));
+  SPACE.add(new _track( t_points, true, false, tr, 30 ));
 
 }
 

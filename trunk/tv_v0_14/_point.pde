@@ -127,7 +127,7 @@ class _point {
     len=sqrt(   sqrt(ax*ax+ay*ay+az*az)/3.
               + sqrt(bx*bx+by*by+bz*bz)/2.
               + sqrt(cx*cx+cy*cy+cz*cz)    );
-    len/=speed/50;
+    len/=speed/10;
     
     ax/=len*len*len;  bx/=len*len;  cx/=len;
     ay/=len*len*len;  by/=len*len;  cy/=len;
@@ -230,6 +230,9 @@ class _point {
     float a,b,d,h2;
     float r[]=new float[2];
     margin*=margin; //margin = margin ^ 2 !!!!
+    
+    if(c<=0)c=A.distance_from(B);
+    if(margin<1)margin=1;
     
     a = this.distance_from(A); a*=a;
     b = this.distance_from(B);

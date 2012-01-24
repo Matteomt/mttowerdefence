@@ -159,30 +159,25 @@ class _fire {
     
     pushStyle();
     //draw collision fx
-    noStroke();
-    fill(0,100,100,100-100*(SPACE.time-this.last_coll_t)/FIREFXLIFE);
-    SPACE.d_ellipse(this.last_coll_p,5,5);
+    stroke(0,100,100,100-100*(SPACE.time-this.last_coll_t)/FIREFXLIFE);
+    SPACE.d_point(this.last_coll_p.adjust(random(-2,2),random(-2,2),0));
           
           
     //draw fire movement
-    for(int i=0;i<5;i++){
-      stroke(
-             this.gun.unit.enemy?0:180,
-             80,
-             100,
-             (5-i) * 20 * ( 1-sq(this.distance_done/this.gun.range)) * ( this.gun.unit.life>0 ? 1 : (1-(SPACE.time-this.gun.unit.damage)/DEBRISLIFE))
-            );
-            
-      if(this.gun.weight<0.5){
-        if(100*(SPACE.time-this.last_coll_t)/FIREFXLIFE  >  1)
-          SPACE.d_line(this.gun.unit.position,this.last_coll_p);
-        else if(i==0)
-          SPACE.d_line(this.gun.unit.position,this.position);
-      }else{
-        SPACE.d_line(this.position.get_next(-10),this.position.get_next(10));
-        break;
-      }
-    }
+    stroke(
+           this.gun.unit.enemy?0:180,
+           80,
+           100,
+           100 * ( 1-sq(this.distance_done/this.gun.range)) * ( this.gun.unit.life>0 ? 1 : (1-(SPACE.time-this.gun.unit.damage)/DEBRISLIFE))
+          );
+          
+    if(this.gun.weight<0.5){
+      if(100*(SPACE.time-this.last_coll_t)/FIREFXLIFE  >  1)
+        SPACE.d_line(this.gun.unit.position,this.last_coll_p);
+      else
+        SPACE.d_line(this.gun.unit.position,this.position);
+    }else
+      SPACE.d_line(this.position.get_next(-10),this.position.get_next(10));
     popStyle();
   }
 }

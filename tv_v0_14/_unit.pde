@@ -88,7 +88,7 @@ class _unit {
       }
       SPACE.d_ellipse(this.position, 2*this.radius, 2*this.radius);
       
-      fill(180,100,100,100);
+      fill(180,100,100,50);
       SPACE.d_text(this.id+" ",this.position);
       
       
@@ -105,7 +105,7 @@ class _unit {
       SPACE.d_ellipse(this.position, 2*this.radius, 2*this.radius);
       SPACE.d_ellipse(this.position.adjust(0,0,0-this.position.z), 1, 1);
       
-      fill(120-180,100,70,100);
+      fill(120-180,100,70,50);
       SPACE.d_text(this.id+" ",this.position);
     }
     popStyle();

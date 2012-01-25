@@ -252,7 +252,7 @@ class _point {
     margin*=margin; //margin = margin ^ 2 !!!!
     
     if(c<=0)c=A.distance_from(B);
-    if(margin<1)margin=1;
+    if(margin<1.5)margin=1.5;
     
     a = this.distance_from(A); a*=a;
     b = this.distance_from(B);

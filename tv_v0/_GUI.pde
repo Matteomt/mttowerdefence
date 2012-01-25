@@ -29,7 +29,7 @@ class _GUI{
                             0,
                             20000
                           );
-      this.building_u.add(new _gun(0.001, 1, 500, 15, .491, 40));
+      this.building_u.add(new _gun(0.001, 1, 200, 50, .49, 40));
       
                       
       SPACE.add(this.building_u);

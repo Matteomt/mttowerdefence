@@ -104,6 +104,26 @@ class _point {
   }
   
   
+  void motion_set_cubic_bezier(_point_static[] cp, float speed, float randomnes, float a, float b, float c, float d){
+    _point_static[] cpr=new _point_static[0];
+    float mul;
+    for(int i=0;i<4;i++){
+      switch(i){
+        case 0: mul=a; break;
+        case 1: mul=b; break;
+        case 2: mul=c; break;
+        default: mul=d;
+      }
+      if(mul!=0)
+        cpr = (_point_static[]) append(cpr, new _point_static(   cp[i].x + mul*randomnes*pow(random(-100.,100.)/100,3),
+                                                                 cp[i].y + mul*randomnes*pow(random(-100.,100.)/100,3),
+                                                                 cp[i].z  ));
+      else
+        cpr = (_point_static[]) append(cpr, cp[i]);
+    }
+    
+    this.motion_set_cubic_bezier(cpr, speed);
+  }
   void motion_set_cubic_bezier(_point_static[] cp, float speed){
     this.set(cp[0].x, cp[0].y, cp[0].z);
     

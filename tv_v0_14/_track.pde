@@ -35,7 +35,7 @@ class _track {
     }
     else if(this.emit_count==10){
       this.emit_count=0;
-      this.last_emit_t=SPACE.time+20000;
+      this.last_emit_t=SPACE.time+10000;
       level++;
     }
   }
@@ -47,7 +47,7 @@ class _track {
     if(!neww || ( neww && SPACE.add(u).level==0 )){
       this.units = ( _unit[] ) append(this.units,u);
     }
-    u.position.motion_set_cubic_bezier(points,u.speed);
+    u.position.motion_set_cubic_bezier(points,u.speed,50,0,1,1,this.ending?1.2:0);
   }
   
   void end(int index,_unit u){
@@ -74,7 +74,7 @@ class _track {
     
     
     for(int i=0;i<this.units.length;i++){
-      if(this.units[i].life>0 && this.units[i].position.distance_from(this.points[this.points.length-1]) < 1+25*this.units[i].position.speed)
+      if(this.units[i].life>0 && this.units[i].position.distance_from(this.points[this.points.length-1]) < (this.ending?70:1)+25*this.units[i].position.speed)
         this.end(i, this.units[i]);
     }
     

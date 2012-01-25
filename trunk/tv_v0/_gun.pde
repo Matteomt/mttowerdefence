@@ -45,7 +45,6 @@ class _gun{
     fire(xs,ys,zs,null);
   }
   void fire(float xs, float ys, float zs, _unit thinking){
-     if(SPACE.time-this.shot_time<this.delay)return;
      if(this.fires.length>=MAXFIRES)
         this.fires =(_fire[]) subset(this.fires,1);
      this.fires    =(_fire[]) append(this.fires, new _fire(
@@ -66,8 +65,8 @@ class _gun{
     for (int i=0; i<this.fires.length; i++)fires[i].draw();
     
     //shot 1 new fire
-    if(this.range>0 && this.unit.life>0){
-      int hitting_list[]=new int[0];
+    if( SPACE.time-this.shot_time >= this.delay   &&  this.range>0 && this.unit.life>0){
+      int hitting_id=-999;
       float max_nice=-999999.;
       float nice; float dis=0;
       for (int i=0;i<SPACE.units.length;i++) {
@@ -76,15 +75,29 @@ class _gun{
          SPACE.units[i].life>0  &&
          (dis=this.unit.position.distance_from(SPACE.units[i].position)) <= this.range+SPACE.units[i].radius
         ){
-            nice=this.range*20-dis*10 + SPACE.units[i].damage;
+            nice=this.range*20-dis*10;
             if(nice>max_nice){
               max_nice=nice;
-              hitting_list=append(hitting_list,i);
+              hitting_id=i;
             }
         }
       }
-      if(max_nice>=0 && hitting_list.length>0)
-        this.fire(SPACE.units[hitting_list[hitting_list.length-1]]);
+      if(max_nice>=0 && hitting_id>=0){
+        _unit hitting=SPACE.units[hitting_id];
+        if(false && this.weight>=1)
+            this.fire(hitting);
+        else{
+            dis=this.unit.position.distance_from(hitting.position);
+            hitting.hit(this.strength*(1-(dis<10?10:dis)/this.range),this);
+            stroke(
+             this.unit.enemy?0:180,
+             80,
+             100,
+             90 * ( 1-sq(dis/this.range))
+            );
+            SPACE.d_line(this.unit.position, hitting.position);
+        }
+      }
       
       if(checkKey(KeyEvent.VK_D)){
         println("      max_nice: "+max_nice+"  //in firing action; hitting unit nice>=0");

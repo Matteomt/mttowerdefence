@@ -135,7 +135,7 @@ class _fire {
           //reduce fire's life
           this.life -= coll_u.radius;
           //send event to the unit
-          coll_u.hit(this.gun.strength,this);
+          coll_u.hit(this.gun.strength,this.gun);
           //move back to colliding position
           this.position.move_on(0-back);
           this.last_coll_t=SPACE.time;
@@ -171,7 +171,7 @@ class _fire {
            100 * ( 1-sq(this.distance_done/this.gun.range)) * ( this.gun.unit.life>0 ? 1 : (1-(SPACE.time-this.gun.unit.damage)/DEBRISLIFE))
           );
           
-    if(this.gun.weight<0.5){
+    if(this.gun.weight<1){
       if(100*(SPACE.time-this.last_coll_t)/FIREFXLIFE  >  1)
         SPACE.d_line(this.gun.unit.position,this.last_coll_p);
       else
